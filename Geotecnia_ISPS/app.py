@@ -1,7 +1,6 @@
 import streamlit as st
 import webbrowser
-import os
-import base64
+
 
 # Importar o sistema de traduções
 from utils.traducoes import get_text
@@ -85,21 +84,9 @@ lang = st.session_state.language
 if st.session_state.pagina_atual == "capa":
     
     # Logo do ISPS CENTRALIZADO usando HTML
-    logo_path = "assets/Picture1.png"
-    if os.path.exists(logo_path):
-        with open(logo_path, "rb") as image_file:
-            encoded_string = base64.b64encode(image_file.read()).decode()
-        
-        st.markdown(
-            f"""
-            <div style="text-align: center; margin-bottom: 20px;">
-                <img src="data:image/png;base64,{encoded_string}" width="200">
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-    else:
-        st.warning("⚠️ Logo não encontrado. Verifica o caminho: " + logo_path)
+    from utils.imagens import img_base64_html
+    st.markdown(img_base64_html("assets/Picture1.png", width=200),
+                unsafe_allow_html=True)
     
     # Títulos com Tradução
     st.markdown(f"<h1 style='text-align: center; color: #2E86AB;'>{get_text('titulo_instituto', lang)}</h1>", unsafe_allow_html=True)
